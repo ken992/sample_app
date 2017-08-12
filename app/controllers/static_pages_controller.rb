@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+#  binding.pry
   def home
   end
 
@@ -8,7 +9,7 @@ class StaticPagesController < ApplicationController
   def about
   end
 
-  def member
+  def addmember
   end
 
 end
