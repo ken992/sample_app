@@ -18,8 +18,22 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_select "div" , /The form contains [1-6] error/
     assert_select "div#error_explanation li" , 1..6 
     assert_select 'form[action="/signup"]'
-
-#   assert_select 'div.<CSS class for field with error>'
-
   end
+
+  test "valid signup information" do
+    get signup_path
+    assert_difference 'User.count', 1 do
+      post users_path, params: { user: { name:  "Example User",
+                                         email: "user@example.com",
+                                         password:              "password",
+                                         password_confirmation: "password" } }
+    end
+    follow_redirect!
+    assert_template 'users/show'
+    assert_select   "div" , /Welcome to the Sample App/
+    assert_select   "div.alert-success" , "Welcome to the Sample App!"
+    assert_not flash.empty?
+    assert flash.present?
+  end
+
 end
