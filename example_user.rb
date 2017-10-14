@@ -18,4 +18,5 @@ class User
     def alphabetical_name
       "#{@last_name}, #{@first_name}" 
     end
+
 end
