@@ -17,6 +17,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                       }
                             }
     assert_template 'users/edit'
+    assert_select 'div' , /The form contains [3-3] error/
   end
 
 end
