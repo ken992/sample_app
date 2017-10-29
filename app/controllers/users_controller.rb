@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: [:edit, :update]
+
   def show
     @user = User.find(params[:id])
     @user2 = params[:action]
@@ -14,6 +16,11 @@ class UsersController < ApplicationController
       log_in @user
       flash[:success] = 'Welcome to the Sample App!'
       redirect_to @user
+      # 以下と挙動が同じ
+      # redirect_to "/users/#{@user.id}"
+      # redirect_to user_url(id: @user.to_param)
+      # redirect_to user_url(id: @user.id)
+
     else
       render 'new'
     end
@@ -39,5 +46,15 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
+    end
+
+    # beforeアクション
+
+    # ログイン済みユーザーかどうか確認
+    def logged_in_user
+      unless logged_in?
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
     end
 end
