@@ -7,7 +7,9 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   has_secure_password
-  validates :password, presence: true, length: { minimum: 5 }
+  validates :password, presence: true, length: { minimum: 5 }, allow_nil: true
+  # allow_nil: true
+  # 検証対象の値がnilの時にvalidationをskipする
 
   class << self
     # 渡された文字列のハッシュ値を返す
