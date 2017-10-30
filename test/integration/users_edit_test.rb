@@ -22,11 +22,12 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_select 'div' , /The form contains [3-3] error/
   end
 
-  # 更新が成功するパターン
-  test 'successful edit' do
-    log_in_as(@user)
+  # friendly forwardingしてからeditがsuccessするpattern
+  # friendly forwardingとは・・ユーザーが認証前に開こうとしていたページへ、認証後にリダイレクトさせること
+  test 'successful edit with friendly forwarding' do
     get edit_user_path(@user)
-    assert_template 'users/edit'
+    log_in_as(@user)
+    assert_redirected_to edit_user_url(@user)
     name = 'Foo Bar'
     email = 'foo@bar.com'
     patch user_path(@user), params: { user: { name: name,
