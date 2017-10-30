@@ -31,8 +31,12 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url # login画面にredirect
     assert session[:forwarding_url]
     log_in_as(@user)  # test user で login
-    assert_redirected_to edit_user_path(@user) || default
+    assert_redirected_to edit_user_path(@user) # friendly forwarding
     assert_nil session[:forwarding_url] # login したら:forwarding_urlはnil
+
+    # 続けてloginした場合,show画面へ遷移
+    log_in_as(@user)
+    assert_redirected_to (@user)
 
     # 別のuserのedit画面のurlを指定するとrootへ遷移
     get edit_user_path(@other_user)
