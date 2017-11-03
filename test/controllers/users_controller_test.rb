@@ -7,6 +7,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @other_user = users(:archer)
   end
 
+  test 'should redirect index when not logged in' do
+    get users_path
+    assert_redirected_to login_url
+  end
+
   test 'should get new' do
     get signup_path
     assert_response :success
@@ -25,7 +30,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url # login画面にredirect
   end
 
-  test "should redirect edit when logged in as wrong user" do
+  test 'should redirect edit when logged in as wrong user' do
     log_in_as(@other_user) #  user2でlogin
     get edit_user_path(@user)  # loginしていない別のuserのurlでedit画面へ遷移
     assert flash.empty? # errorは格納されない
