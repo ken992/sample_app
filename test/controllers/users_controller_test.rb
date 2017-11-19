@@ -48,12 +48,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not allow the admin attribute to be edited via the web' do
-    log_in_as(@other_user)
-    assert_not @other_user.admin?
+    log_in_as(@other_user) # user2でlogin
+    assert_not @other_user.admin? # user2はadmin権限を持っていない
     patch user_path(@other_user), params: { user: { password: @other_user.password,
+                                                    name: "aaaaaa",
                                                     password_confirmation: @other_user.password_confirmation,
-                                                    admin: true } }
-    assert_not @other_user.reload.admin?
+                                                    admin: true } }  # admin権限を付与
+
+    assert_not @other_user.reload.admin? # reloadしたuser2はadmin権限を持っていない
+                                                  # reloadしないと@otherの内容は更新されない
+    patch user_path(@other_user), params: { user: { name: "aaaaaa" } }  # nameの変更
+    @other_user.reload
   end
 
 end
