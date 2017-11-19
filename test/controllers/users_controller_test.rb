@@ -57,8 +57,25 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_not @other_user.reload.admin? # reloadしたuser2はadmin権限を持っていない
                                                   # reloadしないと@otherの内容は更新されない
+
     patch user_path(@other_user), params: { user: { name: "aaaaaa" } }  # nameの変更
     @other_user.reload
   end
+
+  test 'should redirect destroy when not logged in' do
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    assert_redirected_to login_url
+  end
+
+  test 'should redirect destroy when logged in as a non-admin' do
+    log_in_as(@other_user)
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    assert_redirected_to root_url
+  end
+
 
 end
