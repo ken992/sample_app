@@ -26,6 +26,8 @@ class User < ApplicationRecord
     end
   end
 
+  # インスタンスメソッド
+
   # 永続セッションのためにユーザーをデータベースに記憶する
   def remember
     self.remember_token = User.new_token
@@ -47,7 +49,7 @@ class User < ApplicationRecord
 
     # mailアドレスを全て小文字にする
     def downcase_email
-      self.email = email.downcase
+      email.downcase!
     end
 
     # 有効化tokenとdigestを作成及び代入する
