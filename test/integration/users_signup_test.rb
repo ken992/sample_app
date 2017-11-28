@@ -17,7 +17,8 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_select 'div' , /The form contains/
     assert_select 'div' , /The form contains [1-6] error/
     assert_select 'div#error_explanation li' , 1..6
-    assert_select 'form[action="/signup"]'
+    # assert_select 'form[action="/signup"]'
+    assert_select 'form[action="/users"]'
   end
 
   test "valid signup information" do
