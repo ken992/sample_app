@@ -16,11 +16,11 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     patch user_path(@user), params: { user: { name: '',
                                               email: 'foo@invalid',
                                               password: 'foo',
-                                              password_confirmmation: 'bar',
+                                              password_confirmation: 'bar',
                                             }
                                     }
     assert_template 'users/edit'
-    assert_select 'div' , /The form contains [3-3] error/
+    assert_select 'div' , /The form contains [0-9] error/
   end
 
 
@@ -48,7 +48,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     patch user_path(@user), params: { user: { name: name,
                                               email: email,
                                               password: '',
-                                              password_confirmmation: '',
+                                              password_confirmation: '',
                                             }
                                     }
     assert_not flash.empty? # flashに'Profile updated'
