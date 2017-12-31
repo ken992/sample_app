@@ -77,5 +77,5 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     # (show画面ではなく)rootへredirectされる
     assert_redirected_to root_url
   end
-
+ 
 end
