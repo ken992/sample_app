@@ -6,6 +6,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     # usersはfixturesのusers.ymlを指す
     @user = users(:michael)
     @other_user = users(:archer)
+    @non_activated_user = users(:non_activated)
   end
 
   # 更新が失敗するパターン
@@ -57,6 +58,24 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     @user.reload
     assert_equal name, @user.name
     assert_equal email,@user.email
+  end
+
+    test 'should not allow the not activated attribute' do
+    # activateしていないuserはindex画面に表示しない。
+    # また、show画面にも遷移せず、rootへredirectする。
+
+    # activateしていないuserでloginを試みる
+    log_in_as(@non_activated_user)
+    # activatedのカラムがfalseのままであること
+    assert_not @non_activated_user.activated?
+    # indexへ遷移
+    get users_path
+    # index画面にactivateしていないuserが表示されない
+    assert_select "a[href=?]", user_path(@non_activated_user), count: 0
+    # activateしていないｕｓerでshow画面へ遷移を試みる
+    get user_path(@non_activated_user)
+    # (show画面ではなく)rootへredirectされる
+    assert_redirected_to root_url
   end
 
 end
