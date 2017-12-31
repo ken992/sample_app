@@ -5,12 +5,16 @@ class UsersController < ApplicationController
 
 
   def index
-    @users = User.paginate(page: params[:page])
+    # @users = User.paginate(page: params[:page])
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   def show
     @user = User.find(params[:id])
     @user2 = params[:action]
+    # 有効化がfalseの場合、redirect_to root_url and returnを実行する。
+    # 有効化がtrueの場合はなにもしないで抜ける
+    redirect_to root_url and return unless @user.activated?
   end
 
   def new
