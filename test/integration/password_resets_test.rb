@@ -56,6 +56,8 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
           params: { email: user.email,
                     user: { password:              "foobaz",
                             password_confirmation: "foobaz" } }
+    assert_not_nil @user.reset_digest
+    assert_nil @user.reload.reset_digest
     assert is_logged_in?
     assert_not flash.empty?
     assert_redirected_to user
