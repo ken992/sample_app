@@ -26,7 +26,7 @@ class User < ApplicationRecord
     end
   end
 
-  # インスタンスメソッド
+  #  インスタンスメソッド
 
   # 永続セッションのためにユーザーをデータベースに記憶する
   def remember
