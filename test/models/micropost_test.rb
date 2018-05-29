@@ -9,11 +9,26 @@ class MicropostTest < ActiveSupport::TestCase
   end
 
   test "should be valid" do
+    # Micropostオブジェクトが有効であること
+    # valid?を実行するとmodelのvalidationがtriggerされる
     assert @micropost.valid?
   end
 
   test "user id should be present" do
+    # user_idのvalidtionチェックの確認
     @micropost.user_id = nil
     assert_not @micropost.valid?
   end
+  test "content should be present" do
+    # contentが空白の場合、validationで検出
+    @micropost.content = "   "
+    assert_not @micropost.valid?
+  end
+
+  test "content should be at most 140 characters" do
+    # contentが141文字の場合、validationで検出
+    @micropost.content = "a" * 141
+    assert_not @micropost.valid?
+  end
+
 end
