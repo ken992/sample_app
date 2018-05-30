@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     @user2 = params[:action]
     # 有効化がfalseの場合、redirect_to root_url and returnを実行する。
     # 有効化がtrueの場合はなにもしないで抜ける
+    # http://dev.trick-with.net/2012/12/redirect_to-and-return-is-correct-or-not/
     redirect_to root_url and return unless @user.activated?
   end
 
