@@ -11,6 +11,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
+
     @user2 = params[:action]
     # 有効化がfalseの場合、redirect_to root_url and returnを実行する。
     # 有効化がtrueの場合はなにもしないで抜ける
