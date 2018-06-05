@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     end
 
     # beforeアクション
-  
+
     # 正しいuserかどうか確認
     def correct_user
       @user = User.find(params[:id])
