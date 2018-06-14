@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
+  def editx
   end
 
   def update
