@@ -10,28 +10,28 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get root_path
     assert_select 'div.pagination'
+    assert_select 'input[type=FILL_IN]'
     # 無効な送信
-    assert_no_difference 'Micropost.count' do
-      post microposts_path, params: { micropost: { content: "" } }
-    end
+    post microposts_path, micropost: { content: "" }
     assert_select 'div#error_explanation'
     # 有効な送信
     content = "This micropost really ties the room together"
+    picture = fixture_file_upload('test/fixtures/rails.png', 'image/png')
     assert_difference 'Micropost.count', 1 do
-      post microposts_path, params: { micropost: { content: content } }
+      post microposts_path, micropost: { content: content, picture: FILL_IN }
     end
-    assert_redirected_to root_url
+    assert FILL_IN.picture?
     follow_redirect!
     assert_match content, response.body
     # 投稿を削除する
-    assert_select 'a', text: 'delete'
+    assert_select 'a', 'delete'
     first_micropost = @user.microposts.paginate(page: 1).first
     assert_difference 'Micropost.count', -1 do
       delete micropost_path(first_micropost)
     end
-    # 違うユーザーのプロフィールにアクセス (削除リンクがないことを確認)
+    # 違うユーザーのプロフィールにアクセスする
     get user_path(users(:archer))
-    assert_select 'a', text: 'delete', count: 0
+    assert_select 'a', { text: 'delete', count: 0 }
   end
 
   test "micropost sidebar count" do
