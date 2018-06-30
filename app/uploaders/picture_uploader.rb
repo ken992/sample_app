@@ -1,9 +1,20 @@
 class PictureUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
-  include ApplicationHelper
 
-  process resize_to_limit: [400, 400]
+  version :thumb, if: :is_thumb?
+
+  version :thumb do
+    process resize_to_limit: [400, 400]
+  end
+
+  # def filename
+  #   if model.picture?
+  #     if model.picture.file.content_type.include?("image/")
+  #       resize_to_limit 400, 400
+  #     end
+  #   end
+  # end
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -54,5 +65,11 @@ class PictureUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  private
+
+    def is_thumb? picture
+      picture.content_type.include?("image/")
+    end
 
 end
