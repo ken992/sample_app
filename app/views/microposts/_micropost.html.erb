@@ -8,7 +8,7 @@
       <% if micropost.picture.file.content_type.include?('image/') %>
         <%= image_tag micropost.picture.thumb.url %>
       <% else %>
-        <%= video_tag micropost.picture.url, width: "30%", height: "30%", controls: true %>
+        <%= video_tag micropost.picture.url, width: "30%", height: "30%", controls: true, autobuffer: true %>
       <% end %>
     <% end %>
   </span>
