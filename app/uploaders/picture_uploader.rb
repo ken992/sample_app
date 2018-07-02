@@ -5,6 +5,12 @@ class PictureUploader < CarrierWave::Uploader::Base
   version :thumb, if: :is_thumb?
 
   version :thumb do
+    version :human
+    version :monkey
+    version :llama
+  end
+
+  version :thumb do
     process resize_to_limit: [400, 400]
   end
 
@@ -69,6 +75,8 @@ class PictureUploader < CarrierWave::Uploader::Base
   private
 
     def is_thumb? picture
+      # image = MiniMagick::Image.open(picture.path)
+      # image[:width] > image[:height]
       picture.content_type.include?("image/")
     end
 
