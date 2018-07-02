@@ -5,14 +5,16 @@
   </div>
   <%= f.submit "Post", class: "btn btn-primary" %>
   <span class="picture">
+    <%= image_tag(@micropost.picture.nano.url) if @micropost.picture? %>
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png,video/*' %>
+    <%= f.hidden_field :picture_cache %>
   </span>
 <% end %>
 
 <script type="text/javascript">
     $('#micropost_picture').bind('change', function() {
         var size_in_megabytes = this.files[0].size/1024/1024;
-        if (size_in_megabytes > 5) {
+        if (size_in_megabytes > 50) {
             alert('Maximum file size is 5MB. Please choose a smaller file.');
         }
     });

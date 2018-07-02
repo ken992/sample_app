@@ -4,14 +4,21 @@ class PictureUploader < CarrierWave::Uploader::Base
 
   version :thumb, if: :is_thumb?
 
-  version :thumb do
-    version :human
-    version :monkey
-    version :llama
-  end
+  # 無条件にversion big定義の定義とresize_to_limit処理を同時に行う
+  # version :big do
+  #   process resize_to_limit: [1000, 1000]
+  # end
 
   version :thumb do
     process resize_to_limit: [400, 400]
+
+    version :small do
+      process resize_to_fill: [200, 200]
+    end
+  end
+
+  version :nano, from_version: :thumb do
+    process resize_to_fill: [100, 100]
   end
 
   # def filename
