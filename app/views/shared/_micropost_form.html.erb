@@ -5,7 +5,7 @@
   </div>
   <%= f.submit "Post", class: "btn btn-primary" %>
   <span class="picture">
-    <%= image_tag(@micropost.picture.nano.url) if @micropost.picture? %>
+    <%= image_tag(@micropost.picture.url(:nano)) if @micropost.picture? %>
     <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png,video/*' %>
     <%= f.hidden_field :picture_cache %>
   </span>

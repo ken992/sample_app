@@ -21,6 +21,7 @@ class PictureUploader < CarrierWave::Uploader::Base
     process resize_to_fill: [100, 100]
   end
 
+
   # def filename
   #   if model.picture?
   #     if model.picture.file.content_type.include?("image/")
