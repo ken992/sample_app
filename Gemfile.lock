@@ -389,7 +389,7 @@ DEPENDENCIES
   bootstrap-will_paginate (= 1.0.0)
   carrierwave (= 1.1.0)
   coffee-rails (= 4.2.2)
-  debase (= 0.2.2)
+  debase
   faker (= 1.7.3)
   fog (= 1.40.0)
   guard (= 2.13.0)

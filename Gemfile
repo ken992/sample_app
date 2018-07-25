@@ -47,7 +47,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'better_errors'
 gem 'binding_of_caller'
 gem 'ruby-debug-ide'
-gem 'debase', '0.2.2'
+gem 'debase'
 
 gem 'therubyracer', platforms: :ruby
 
