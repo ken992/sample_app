@@ -1,1 +1,2 @@
-print ('py-test!!!')
+def PyTest():
+  print ('py-test!!!')
